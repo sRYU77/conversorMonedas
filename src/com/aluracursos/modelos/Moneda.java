@@ -1,4 +1,5 @@
 package com.aluracursos.modelos;
+import com.google.gson.JsonObject;
 
-public record Moneda(double ARS, double USD, double COP, double BRL) {
+public record Moneda(JsonObject conversion_rates) {
 }
