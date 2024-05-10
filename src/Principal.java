@@ -7,12 +7,13 @@ public class Principal {
     public static void main(String[] args) throws IOException {
         ConsultaDivisa consultaDivisa = new ConsultaDivisa();
         Scanner lectura = new Scanner(System.in);
-        var aConvertir = 0;
-        consultaDivisa.consulta();
-        System.out.println(consultaDivisa.consulta());
+        double aConvertir;
+        var divisaslista =  consultaDivisa.consulta();
+        double valorConvertido;
+        boolean salir = true;
         System.out.println("************************************************");
         System.out.println("Bienvenido al sistema de conversion de divisas");
-        while (true){
+        while (salir){
             System.out.println("Por favor seleccione la opcion deseada");
             System.out.println("1) Dolar ==> Peso Argentino");
             System.out.println("2) Peso argentino ==> Dolar");
@@ -25,7 +26,45 @@ public class Principal {
             switch (opcion){
                 case 1:
                     System.out.println("Ingrese el valor a convertir");
-                    aConvertir = Integer.valueOf(lectura.nextLine());
+                    aConvertir = Double.valueOf(lectura.nextLine());
+                    valorConvertido =  (Double) divisaslista.get(0) * aConvertir;
+                    System.out.println("el equivalente de: " + aConvertir + " dolares a ARS: " +valorConvertido);
+                    break;
+                case 2:
+                    System.out.println("Ingrese el valor a convertir");
+                    aConvertir = Double.valueOf(lectura.nextLine());
+                    valorConvertido =  aConvertir / (Double) divisaslista.get(0) ;
+                    System.out.println("el equivalente de: " + aConvertir + " ARS a dolares: " +valorConvertido);
+                    break;
+                case 3:
+                    System.out.println("Ingrese el valor a convertir");
+                    aConvertir = Double.valueOf(lectura.nextLine());
+                    valorConvertido =  (Double) divisaslista.get(1) * aConvertir;
+                    System.out.println("el equivalente de: " + aConvertir + " dolares a BRL: " +valorConvertido);
+                    break;
+                case 4:
+                    System.out.println("Ingrese el valor a convertir");
+                    aConvertir = Double.valueOf(lectura.nextLine());
+                    valorConvertido =  aConvertir / (Double) divisaslista.get(1) ;
+                    System.out.println("el equivalente de: " + aConvertir + " BRL a dolares: " +valorConvertido);
+                    break;
+                case 5:
+                    System.out.println("Ingrese el valor a convertir");
+                    aConvertir = Double.valueOf(lectura.nextLine());
+                    valorConvertido =  (Double) divisaslista.get(2) * aConvertir;
+                    System.out.println("el equivalente de: " + aConvertir + " dolares a COP: " +valorConvertido);
+                    break;
+                case 6:
+                    System.out.println("Ingrese el valor a convertir");
+                    aConvertir = Double.valueOf(lectura.nextLine());
+                    valorConvertido =  aConvertir / (Double) divisaslista.get(2);
+                    System.out.println("el equivalente de: " + aConvertir + " COP a dolares: " +valorConvertido);
+                    break;
+                case 7:
+                   salir = false;
+                   break;
+                default:
+                    System.out.println("Ingrese una opcion valida por favor");
             }
             System.out.println("************************************************");
         }

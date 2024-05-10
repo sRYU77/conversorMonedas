@@ -18,20 +18,29 @@ import java.util.List;
 
 
 public class ConsultaDivisa {
-    public Moneda consulta() throws IOException {
-        URI direccion = URI.create("https://v6.exchangerate-api.com/v6/6f14b9dfa5a28de3fcdef85c/latest/USD");
+    public ArrayList consulta() throws IOException {
+        // Setting URL
+        String url_str = "https://v6.exchangerate-api.com/v6/6f14b9dfa5a28de3fcdef85c/latest/USD";
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(direccion)
-                .build();
-        try {
-            HttpResponse<String> response = null;
-            response = client
-                    .send(request, HttpResponse.BodyHandlers.ofString());
-            return new Gson().fromJson(response.body(), Moneda.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        // Making Request
+        URL url = new URL(url_str);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        // Convert to JSON
+        JsonParser jp = new JsonParser();
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jsonobj = root.getAsJsonObject();
+
+        // Accessing object
+        JsonObject req_result = jsonobj.get("conversion_rates").getAsJsonObject();
+        ArrayList<Double> divisas = new ArrayList<Double>();
+        divisas.add(req_result.get("ARS").getAsDouble());
+        divisas.add(req_result.get("BRL").getAsDouble());
+        divisas.add(req_result.get("COP").getAsDouble());
+        divisas.add(req_result.get("USD").getAsDouble());
+        System.out.println("Impresion de la lista de divisas: " + divisas);
+
+        return divisas;
     }
 }
